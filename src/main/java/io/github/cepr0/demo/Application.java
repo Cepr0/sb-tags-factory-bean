@@ -12,8 +12,10 @@ import java.util.function.Supplier;
 @SpringBootApplication
 public class Application {
 
-	public Application(@Qualifier("greetings") Map<String, Supplier<String>> suppliers) {
-		System.out.println(suppliers.keySet());
+	public Application(@Qualifier("greetings") Map<String, Supplier<String>> beans) {
+		System.out.println(beans.keySet());
+		Supplier<String> hi = beans.get("hi");
+		System.out.println(hi.get());
 	}
 
 	public static void main(String[] args) {
@@ -25,51 +27,41 @@ public class Application {
 
 		@Bean
 		public TagsFactoryBean greetings() {
-			return new TagsFactoryBean("greeting");
+			return TagsFactoryBean.<Supplier>builder()
+					.tags("greeting")
+					.type(Supplier.class)
+					.generics(String.class)
+					.build();
 		}
 
 		@Tags({"greeting", "2letters"})
 		@Bean
 		public Supplier<String> hi() {
-			return new Supplier<String>() {
-				@Override
-				public String get() {
-					return "hi";
-				}
-			};
+			return () -> "hi";
+		}
+
+		@Tags("greeting")
+		@Bean
+		public Supplier<Integer> qu() {
+			return () -> 0;
 		}
 
 		@Tags({"parting", "2letters"})
 		@Bean
 		public Supplier<String> by() {
-			return new Supplier<String>() {
-				@Override
-				public String get() {
-					return "by";
-				}
-			};
+			return () -> "by";
 		}
 
 		@Tags("greeting")
 		@Bean
 		public Supplier<String> hello() {
-			return new Supplier<String>() {
-				@Override
-				public String get() {
-					return "hello";
-				}
-			};
+			return () -> "hello";
 		}
 
 		@Tags("parting")
 		@Bean
 		public Supplier<String> goodbye() {
-			return new Supplier<String>() {
-				@Override
-				public String get() {
-					return "goodbye";
-				}
-			};
+			return () -> "goodbye";
 		}
 	}
 }
