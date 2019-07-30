@@ -6,31 +6,31 @@ Mark your beans with [@Tags](src/main/java/io/github/cepr0/demo/Tags.java) annot
 @Tags({"greeting", "2letters"})
 @Bean
 public Supplier<String> hi() {
-	return () -> "hi";
+   return () -> "hi";
 }
 
 @Tags({"parting", "2letters"})
 @Bean
 public Supplier<String> by() {
-	return () -> "by";
+   return () -> "by";
 }
 
 @Tags("greeting")
 @Bean
 public Supplier<String> hello() {
-	return () -> "hello";
+   return () -> "hello";
 }
 
 @Tags("parting")
 @Bean
 public Supplier<String> goodbye() {
-	return () -> "goodbye";
+   return () -> "goodbye";
 }
 
 @Tags("other")
 @Bean
 public Supplier<String> other() {
-	return () -> "other";
+   return () -> "other";
 }
 ```
 Prepare [TagsFactoryBean](src/main/java/io/github/cepr0/demo/TagsFactoryBean.java):
@@ -39,10 +39,10 @@ Prepare [TagsFactoryBean](src/main/java/io/github/cepr0/demo/TagsFactoryBean.jav
 @Bean
 public TagsFactoryBean words() {
    return TagsFactoryBean.<Supplier>builder()
-			.tags("2letters", "other")
-			.type(Supplier.class)
-			.generics(String.class)
-			.build();
+         .tags("2letters", "other")
+         .type(Supplier.class)
+         .generics(String.class)
+         .build();
 }
 ``` 
 
